@@ -7,7 +7,7 @@ private ArrayList <MSButton> bombs = new ArrayList <MSButton>(); //ArrayList of 
 
 void setup ()
 {
-  size(500, 500);
+  size(460, 460);
   textAlign(CENTER, CENTER);
 
   // make the manager
@@ -47,19 +47,40 @@ public void draw ()
 }
 public boolean isWon()
 {
+  for (int r = 0; r < NUM_ROWS; r ++)
+  {
+    for (int c = 0; c < NUM_COLS; c ++)
+    {
+      if(!buttons[r][c].isMarked() || !buttons[r][c].isClicked())
+      {
+        return false;
+      }
+    }
+    return true;
+  }
   //loops go through all the columns
   //if not all marked or clicked, return false, else return true
-
   //your code here
   return false;
 }
 public void displayLosingMessage()
 {
-  //your code here
+  buttons[9][6].setLabel("Y");
+  buttons[9][7].setLabel("O");
+  buttons[9][8].setLabel("U");
+  buttons[9][10].setLabel("L");
+  buttons[9][11].setLabel("O");
+  buttons[9][12].setLabel("S");
+  buttons[9][13].setLabel("E");
 }
 public void displayWinningMessage()
 {
-  //your code here
+  buttons[9][6].setLabel("Y");
+  buttons[9][7].setLabel("O");
+  buttons[9][8].setLabel("U");
+  buttons[9][10].setLabel("W");
+  buttons[9][11].setLabel("I");
+  buttons[9][12].setLabel("N");
 }
 
 public class MSButton
@@ -71,8 +92,8 @@ public class MSButton
 
   public MSButton ( int rr, int cc )
   {
-    width = 600/NUM_COLS;
-    height = 600/NUM_ROWS;
+    width = 460/NUM_COLS;
+    height = 460/NUM_ROWS;
     r = rr;
     c = cc; 
     x = c*width;
@@ -103,29 +124,40 @@ public class MSButton
       }
     } else if (bombs.contains(this))
     {
-      displayLosingMessage();
+      if (mousePressed == true && mouseButton == RIGHT)
+      {
+      }else
+      {
+        displayLosingMessage();
+      }
     } else if (countBombs(this.r, this.c) > 0)
     {
       setLabel(""+countBombs(this.r, this.c));
     } else
     {
-      if (isValid(r, c - 1) && buttons[r][c - 1].isMarked())
+      if (isValid(r, c - 1) && !buttons[r][c - 1].isClicked())
         buttons[r][c - 1].mousePressed();
-      if (isValid(r, c + 1) && buttons[r][c + 1].isMarked())
+      if (isValid(r, c + 1) && !buttons[r][c + 1].isClicked())
         buttons[r][c + 1].mousePressed();
-      if (isValid(r - 1, c) && buttons[r - 1][c].isMarked())
+      if (isValid(r - 1, c) && !buttons[r - 1][c].isClicked())
         buttons[r - 1][c].mousePressed();
-      if (isValid(r + 1, c) && buttons[r + 1][c].isMarked())
+      if (isValid(r + 1, c) && !buttons[r + 1][c].isClicked())
         buttons[r + 1][c].mousePressed();
     }
   }
   public void draw () 
   {  
     if (marked)
+    {
       fill(0);
-    else if ( clicked && bombs.contains(this) ) 
+    }else if (clicked && bombs.contains(this))
+    {
+      if (mousePressed == true && (mouseButton == RIGHT))
+      {
+        fill(0);
+      }
       fill(255, 0, 0);
-    else if (clicked)
+    }else if (clicked)
       fill( 200 );
     else 
     fill( 100 );
