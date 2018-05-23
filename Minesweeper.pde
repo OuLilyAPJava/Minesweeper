@@ -204,7 +204,7 @@ public class MSButton
     //your code here
     for (int i = -1; i <= 1; i ++)
     {
-      for (int j = -1; i <= 1; j ++)
+      for (int j = -1; j <= 1; j ++)
       {
         if (isValid(row + i, col + j) && bombs.contains(buttons[row + i][col + j]))
         {
