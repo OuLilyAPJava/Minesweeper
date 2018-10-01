@@ -45,6 +45,8 @@ public void draw ()
   if (gameOver == false);
   {
     background(0);
+    textSize(18);
+    text("Bombs remaining:" + unmarkedBombs, 100, 30);
   }
   if (isWon())
   {
